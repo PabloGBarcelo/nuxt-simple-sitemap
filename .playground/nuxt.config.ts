@@ -3,6 +3,8 @@ import { defineNuxtConfig } from 'nuxt/config'
 import { defineNuxtModule } from '@nuxt/kit'
 import { startSubprocess } from '@nuxt/devtools-kit'
 import NuxtSimpleSitemap from '../src/module'
+import i18nPages from './i18n.pages'
+import i18nLocales from './i18n.locales'
 
 export default defineNuxtConfig({
   modules: [
@@ -49,8 +51,11 @@ export default defineNuxtConfig({
   ],
   ignorePrefix: 'ignore-',
   i18n: {
-    locales: ['en', 'fr'],
     defaultLocale: 'en',
+    pages: i18nPages,
+    baseUrl: "https://www.nuxtseo.com",
+    langDir: "locales",
+    locales: i18nLocales,
   },
   nitro: {
     plugins: ['plugins/sitemap.ts'],
@@ -95,46 +100,6 @@ export default defineNuxtConfig({
       ['https://api.example.com/pages/urls', { headers: { Authorization: 'Bearer <token>' } }],
     ],
     defaultSitemapsChunkSize: 10,
-    sitemaps: {
-      posts: {
-        includeAppSources: true,
-        urls: async () => {
-          await new Promise((then) => {
-            setTimeout(then, 5000)
-          })
-          return ['/slow-url']
-        },
-        include: ['/slow-url', '/en/blog/**', '/fr/blog/**', '/blog/**'],
-      },
-      pages: {
-        includeAppSources: true,
-        sources: [
-          '/api/sitemap-foo',
-          'https://example.com/invalid.json',
-        ],
-        exclude: ['/en/blog/**', '/fr/blog/**', '/blog/**'],
-        urls: [
-          {
-            loc: '/about',
-            lastmod: '2023-02-21T08:50:52.000Z',
-            alternatives: [
-              {
-                href: '/fr/about',
-                hreflang: 'fr',
-              },
-            ],
-            images: [
-              {
-                loc: 'https://example.com/image-3.jpg',
-              },
-            ],
-          },
-        ],
-      },
-      index: [
-        { sitemap: 'https://www.odysseytraveller.com/sitemap-pages.xml' },
-      ],
-    },
   },
   routeRules: {
     '/secret': {
