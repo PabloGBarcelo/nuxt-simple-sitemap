@@ -175,7 +175,7 @@ export default defineNuxtModule<ModuleOptions>({
               alternatives.push({ hreflang: 'x-default', href: pageLocales[nuxtI18nConfig.defaultLocale] })
             i18nPagesSources.urls!.push({
               _sitemap: locale.iso || locale.code,
-              loc: pageLocales[localeCode],
+              loc: localeCode + pageLocales[localeCode],
               alternatives,
             })
           }
